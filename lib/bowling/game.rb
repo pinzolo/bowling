@@ -27,7 +27,7 @@ module Bowling
       last_flame = nil
       last_last_flame = nil
 
-      flames do |flame|
+      flames.each do |flame|
         unless flame.strike?
           score1 = flame.score1
           score1 = 0 if score1 == :-
