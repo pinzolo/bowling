@@ -6,6 +6,10 @@
 
 module Bowling
   class Game
+    def initialize(game_str)
+      @game_str = game_str
+    end
+
     # == Parameters:
     #
     # game: "[[1,1],[2,3],...]"
@@ -20,9 +24,7 @@ module Bowling
     # /: スペア
     # -: ガター
     #
-    def score(game)
-      @game_str = game
-
+    def score
       total_score = 0
       last_flame = nil
       last_last_flame = nil
