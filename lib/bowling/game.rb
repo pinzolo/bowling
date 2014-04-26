@@ -25,23 +25,31 @@ module Bowling
 
       total_score = 0
       last_flame = nil
+      last_last_flame = nil
 
-      flames.each do |flame|
-        score1 = flame.score1
-        score1 = 0 if score1 == :-
-        if last_flame && last_flame.spare?
-          total_score += 10 + score1
-        end
-        score2 = flame.score2
-        score2 = 0 if score2 == :-
-        if last_flame && last_flame.strike?
-          total_score += 10 + score1 + score2
+      flames do |flame|
+        unless flame.strike?
+          score1 = flame.score1
+          score1 = 0 if score1 == :-
+
+          if last_flame && last_flame.spare?
+            total_score += 10 + score1
+          end
+          score2 = flame.score2
+          score2 = 0 if score2 == :-
+          if last_flame && last_flame.strike?
+            if last_last_flame && last_last_flame.strike?
+              total_score += 20 + score1
+            end
+            total_score += 10 + score1 + score2
+          end
+
+          if !flame.spare? and !flame.strike?
+            total_score += score2 + score1
+          end
         end
 
-        if !flame.spare? and !flame.strike?
-          total_score += score2 + score1
-        end
-
+        last_last_flame = last_flame
         last_flame = flame
       end
 

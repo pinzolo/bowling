@@ -24,10 +24,17 @@ describe Bowling::Game do
     it { expect(subject.score(game)).to eq 29 }
   end
 
-  context "with flames that has strike!!" do
-    #              1     2     3     4     5     6     7     8     9     10
+  context "with flames that has a strike!!" do
+    #              1     2    3     4     5     6     7     8     9     10
     let(:game) { "[[1,1],[X],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]]" }
-    # score        2     14    16    18    20    22    24    26    28    30
+    # score        2     14   16    18    20    22    24    26    28    30
     it { expect(subject.score(game)).to eq 30 }
+  end
+
+  context "with flames that has 2 strikes!!" do
+    #              1     2    3   4     5     6     7     8     9     10
+    let(:game) { "[[1,1],[X],[X],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]]" }
+    # score        2     23   35  37    39    41    43    45    47    49
+    it { expect(subject.score(game)).to eq 49 }
   end
 end
