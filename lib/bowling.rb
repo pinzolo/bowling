@@ -21,16 +21,29 @@ class Bowling
   #
   def self.score(game)
     filtered_game = game.dup
-    filtered_game.gsub!(/-/, ':-')
+    filtered_game.gsub!(%r{-}, ':-')
+    filtered_game.gsub!(%r{/}, ':/')
 
     flames = eval(filtered_game)
-    flames.inject(0) { |score, flame|
+    score = 0
+    spare = false
+    flames.each do |flame|
       score1 = flame[0]
       score1 = 0 if score1 == :-
+      if spare
+        score += 10 + score1
+        spare = false
+      end
       score2 = flame[1]
       score2 = 0 if score2 == :-
-      
-      score + score2 + score1
-    }
+
+      if score2 == :/
+        spare = true
+      else
+        score += score2 + score1
+      end
+    end
+
+    score
   end
 end
