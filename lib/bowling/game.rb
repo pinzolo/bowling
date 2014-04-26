@@ -34,8 +34,11 @@ module Bowling
         end
         score2 = flame.score2
         score2 = 0 if score2 == :-
+        if last_flame && last_flame.strike?
+          total_score += 10 + score1 + score2
+        end
 
-        unless flame.spare?
+        if !flame.spare? and !flame.strike?
           total_score += score2 + score1
         end
 
@@ -51,6 +54,7 @@ module Bowling
       filtered_game = @game_str.dup
       filtered_game.gsub!(%r{-}, ':-')
       filtered_game.gsub!(%r{/}, ':/')
+      filtered_game.gsub!('X', ':X')
 
       flames_ = eval(filtered_game)
 

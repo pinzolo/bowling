@@ -10,6 +10,10 @@ module Bowling
       @flame[1] == :/
     end
 
+    def strike?
+      @flame[0] == :X
+    end
+
     def score1
       @flame[0]
     end

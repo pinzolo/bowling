@@ -26,4 +26,16 @@ describe Bowling::Flame do
       its(:spare?) { should be_false }
     end
   end
+
+  describe "#strike?" do
+    context "with a strike flame" do
+      subject { Bowling::Flame.new([:X]) }
+      its(:strike?) { should be_true }
+    end
+
+    context "with a non strike flame" do
+      subject { Bowling::Flame.new([2,3]) }
+      its(:strike?) { should be_false }
+    end
+  end
 end
