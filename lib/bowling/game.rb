@@ -21,16 +21,12 @@ module Bowling
     # -: ガター
     #
     def score(game)
-      filtered_game = game.dup
-      filtered_game.gsub!(%r{-}, ':-')
-      filtered_game.gsub!(%r{/}, ':/')
+      @game_str = game
 
-      flames = eval(filtered_game)
       total_score = 0
       last_flame = nil
-      flames.each do |flame_|
-        flame = Flame.new(flame_)
 
+      flames.each do |flame|
         score1 = flame.score1
         score1 = 0 if score1 == :-
         if last_flame && last_flame.spare?
@@ -47,6 +43,18 @@ module Bowling
       end
 
       total_score
+    end
+
+    def flames
+      return @flames if defined?(@flames)
+
+      filtered_game = @game_str.dup
+      filtered_game.gsub!(%r{-}, ':-')
+      filtered_game.gsub!(%r{/}, ':/')
+
+      flames_ = eval(filtered_game)
+
+      @flames = flames_.map { |flame| Flame.new(flame) }
     end
   end
 end
