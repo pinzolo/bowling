@@ -28,17 +28,19 @@ module Bowling
       flames = eval(filtered_game)
       score = 0
       spare = false
-      flames.each do |flame|
-        score1 = flame[0]
+      flames.each do |flame_|
+        flame = Flame.new(flame_)
+
+        score1 = flame.score1
         score1 = 0 if score1 == :-
         if spare
           score += 10 + score1
           spare = false
         end
-        score2 = flame[1]
+        score2 = flame.score2
         score2 = 0 if score2 == :-
 
-        if score2 == :/
+        if flame.spare?
           spare = true
         else
           score += score2 + score1
