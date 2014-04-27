@@ -3,35 +3,47 @@ module Bowling
   class Scorer
     def score(frame)
       if frame.strike?
-        held_frames << frame
-        if @state == 'strike_strike'
-          turkey
-        elsif @state == 'spare'
-          spare_strike
-        else
-          append_state('strike')
-        end
+        on_strike(frame)
       elsif frame.spare?
-        held_frames << frame
-        if @state == 'spare'
-          spare(frame)
-        elsif @state == 'strike'
-          strike_spare
-        elsif @state == 'strike_strike'
-          strike_strike_spare(frame)
-        else
-          append_state('spare')
-        end
+        on_spare(frame)
       else
-        if @state
-          send(@state, frame)
-          @state = nil
-        end
-        normal(frame)
+        on_normal_point(frame)
       end
     end
 
     private
+
+    def on_strike(frame)
+      held_frames << frame
+      if @state == 'strike_strike'
+        turkey
+      elsif @state == 'spare'
+        spare_strike
+      else
+        append_state('strike')
+      end
+    end
+
+    def on_spare(frame)
+      held_frames << frame
+      if @state == 'spare'
+        spare(frame)
+      elsif @state == 'strike'
+        strike_spare
+      elsif @state == 'strike_strike'
+        strike_strike_spare(frame)
+      else
+        append_state('spare')
+      end
+    end
+
+    def on_normal_point(frame)
+      if @state
+        send(@state, frame)
+        @state = nil
+      end
+      normal(frame)
+    end
 
     def held_frames
       @held_frames ||= []
