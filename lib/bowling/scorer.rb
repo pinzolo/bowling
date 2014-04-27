@@ -8,7 +8,6 @@ module Bowling
           turkey
         elsif @state == 'spare'
           spare_strike
-          @state = 'strike'
         else
           append_state('strike')
         end
@@ -18,7 +17,8 @@ module Bowling
           spare(frame)
         elsif @state == 'strike'
           strike_spare
-          @state = 'spare'
+        elsif @state == 'strike_strike'
+          strike_strike_spare(frame)
         else
           append_state('spare')
         end
@@ -60,10 +60,17 @@ module Bowling
 
     def spare_strike
       held_frames.shift.score = 20
+      @state = 'strike'
     end
 
     def strike_spare
       held_frames.shift.score = 20
+      @state = 'spare'
+    end
+
+    def strike_strike_spare(frame)
+      held_frames.shift.score = 20 + frame.pin_count1
+      strike_spare
     end
 
     def append_state(new_state)
