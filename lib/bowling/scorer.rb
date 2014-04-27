@@ -16,6 +16,9 @@ module Bowling
         held_frames << frame
         if @state == 'spare'
           spare(frame)
+        elsif @state == 'strike'
+          strike_spare
+          @state = 'spare'
         else
           append_state('spare')
         end
@@ -56,6 +59,10 @@ module Bowling
     end
 
     def spare_strike
+      held_frames.shift.score = 20
+    end
+
+    def strike_spare
       held_frames.shift.score = 20
     end
 
