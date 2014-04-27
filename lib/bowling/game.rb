@@ -11,6 +11,8 @@ module Bowling
         raise ArgumentError, "score_note is invalid format."
       end
       @score_note = score_note
+      scorer = Scorer.new
+      frames.each { |frame| scorer.score(frame) }
     end
 
     # == Parameters:
@@ -28,48 +30,22 @@ module Bowling
     # -: ガター
     #
     def score
-      total_score = 0
-      last_frame = nil
-      last_last_frame = nil
-
-      frames.each do |frame|
-        unless frame.strike?
-          score1 = frame.score1
-          score1 = 0 if score1 == :-
-
-          if last_frame && last_frame.spare?
-            total_score += 10 + score1
-          end
-          score2 = frame.score2
-          score2 = 0 if score2 == :-
-          if last_frame && last_frame.strike?
-            if last_last_frame && last_last_frame.strike?
-              total_score += 20 + score1
-            end
-            total_score += 10 + score1 + score2
-          end
-
-          if !frame.spare? and !frame.strike?
-            total_score += score2 + score1
-          end
-        end
-
-        last_last_frame = last_frame
-        last_frame = frame
-      end
-
-      total_score
+      frames.inject(0) { |total, frame| total += frame.score }
     end
+
+    def results
+      scores = []
+      frames.each do |frame|
+        scores << scores.last.to_i + frame.score
+      end
+      scores.join(',')
+    end
+
+    private
 
     def frames
       @frames ||= eval(filtered_score_note).map { |frame| Frame.new(frame) }
     end
-
-    def results
-      frames.map(&:total_score).join(',')
-    end
-
-    private
 
     def filtered_score_note
       @score_note.dup

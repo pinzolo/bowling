@@ -38,4 +38,38 @@ describe Bowling::Frame do
       its(:strike?) { should be_false }
     end
   end
+
+  describe "#pin_count1" do
+    context "with a strike frame" do
+      subject { Bowling::Frame.new([:X]) }
+      its(:pin_count1) { should eq 10 }
+    end
+
+    context "with gutter" do
+      subject { Bowling::Frame.new([:-, 3]) }
+      its(:pin_count1) { should eq 0 }
+    end
+
+    context "with defeated pin count" do
+      subject { Bowling::Frame.new([2,3]) }
+      its(:pin_count1) { should eq 2 }
+    end
+  end
+
+  describe "#pin_count2" do
+    context "with a spare frame" do
+      subject { Bowling::Frame.new([3, :/]) }
+      its(:pin_count2) { should eq 7 }
+    end
+
+    context "with gutter" do
+      subject { Bowling::Frame.new([4, :-]) }
+      its(:pin_count2) { should eq 0 }
+    end
+
+    context "with defeated pin count" do
+      subject { Bowling::Frame.new([2,3]) }
+      its(:pin_count2) { should eq 3 }
+    end
+  end
 end
