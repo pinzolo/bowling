@@ -11,7 +11,11 @@ module Bowling
         end
       elsif frame.spare?
         held_frames << frame
-        append_state('spare')
+        if @state == "spare"
+          spare(frame)
+        else
+          append_state('spare')
+        end
       else
         if @state
           send(@state, frame)

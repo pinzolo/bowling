@@ -58,6 +58,20 @@ describe Bowling::Game do
     its(:results) { should eq "2,32,62,83,95,97,99,101,103,105" }
   end
 
+  context "with flames that has spare-spare" do
+    let(:score_note) { "[[1,1],[1,/],[1,/],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]]" }
+    subject { Bowling::Game.new(score_note) }
+    its(:score) { should eq 38 }
+    its(:results) { should eq "2,13,24,26,28,30,32,34,36,38" }
+  end
+
+  context "with flames that has spare-spare-spare" do
+    let(:score_note) { "[[1,1],[1,/],[1,/],[1,/],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]]" }
+    subject { Bowling::Game.new(score_note) }
+    its(:score) { should eq 47 }
+    its(:results) { should eq "2,13,24,35,37,39,41,43,45,47" }
+  end
+
   context "with flames that has spare-strike" do
     let(:score_note) { "[[1,1],[1,/],[X],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1]]" }
     subject { Bowling::Game.new(score_note) }
