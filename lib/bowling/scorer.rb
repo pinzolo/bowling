@@ -4,7 +4,11 @@ module Bowling
     def score(frame)
       if frame.strike?
         held_frames << frame
-        append_state('strike')
+        if @state == 'strike_strike'
+          turkey
+        else
+          append_state('strike')
+        end
       elsif frame.spare?
         held_frames << frame
         append_state('spare')
@@ -38,6 +42,10 @@ module Bowling
     def strike_strike(frame)
       held_frames.shift.score = 20 + frame.pin_count1
       strike(frame)
+    end
+
+    def turkey
+      held_frames.shift.score = 30
     end
 
     def append_state(new_state)
