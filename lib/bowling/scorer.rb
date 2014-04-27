@@ -48,6 +48,11 @@ module Bowling
       held_frames.shift.score = 30
     end
 
+    def spare_strike(frame)
+      held_frames.shift.score = 20
+      strike(frame)
+    end
+
     def append_state(new_state)
       if @state
         @state << "_#{new_state}"
