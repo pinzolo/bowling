@@ -2,9 +2,9 @@
 
 require_relative "../../lib/bowling"
 
-describe Bowling::Flame do
-  context "with flames that has 2 scores" do
-    subject { Bowling::Flame.new([2,7]) }
+describe Bowling::Frame do
+  context "with frames that has 2 scores" do
+    subject { Bowling::Frame.new([2,7]) }
 
     describe "#score1" do
       its(:score1) { should eq 2 }
@@ -16,25 +16,25 @@ describe Bowling::Flame do
   end
 
   describe "#spare?" do
-    context "with a spare flame" do
-      subject { Bowling::Flame.new([2,:/]) }
+    context "with a spare frame" do
+      subject { Bowling::Frame.new([2,:/]) }
       its(:spare?) { should be_true }
     end
 
-    context "with a non spare flame" do
-      subject { Bowling::Flame.new([2,3]) }
+    context "with a non spare frame" do
+      subject { Bowling::Frame.new([2,3]) }
       its(:spare?) { should be_false }
     end
   end
 
   describe "#strike?" do
-    context "with a strike flame" do
-      subject { Bowling::Flame.new([:X]) }
+    context "with a strike frame" do
+      subject { Bowling::Frame.new([:X]) }
       its(:strike?) { should be_true }
     end
 
-    context "with a non strike flame" do
-      subject { Bowling::Flame.new([2,3]) }
+    context "with a non strike frame" do
+      subject { Bowling::Frame.new([2,3]) }
       its(:strike?) { should be_false }
     end
   end

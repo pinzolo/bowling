@@ -6,8 +6,11 @@
 
 module Bowling
   class Game
-    def initialize(game_str)
-      @game_str = game_str
+    def initialize(score_note)
+      unless /\A[\dX\/,\[\]-]+\z/.match(score_note)
+        raise ArgumentError, "score_note is invalid format."
+      end
+      @score_note = score_note
     end
 
     # == Parameters:
@@ -26,49 +29,53 @@ module Bowling
     #
     def score
       total_score = 0
-      last_flame = nil
-      last_last_flame = nil
+      last_frame = nil
+      last_last_frame = nil
 
-      flames.each do |flame|
-        unless flame.strike?
-          score1 = flame.score1
+      frames.each do |frame|
+        unless frame.strike?
+          score1 = frame.score1
           score1 = 0 if score1 == :-
 
-          if last_flame && last_flame.spare?
+          if last_frame && last_frame.spare?
             total_score += 10 + score1
           end
-          score2 = flame.score2
+          score2 = frame.score2
           score2 = 0 if score2 == :-
-          if last_flame && last_flame.strike?
-            if last_last_flame && last_last_flame.strike?
+          if last_frame && last_frame.strike?
+            if last_last_frame && last_last_frame.strike?
               total_score += 20 + score1
             end
             total_score += 10 + score1 + score2
           end
 
-          if !flame.spare? and !flame.strike?
+          if !frame.spare? and !frame.strike?
             total_score += score2 + score1
           end
         end
 
-        last_last_flame = last_flame
-        last_flame = flame
+        last_last_frame = last_frame
+        last_frame = frame
       end
 
       total_score
     end
 
-    def flames
-      return @flames if defined?(@flames)
+    def frames
+      @frames ||= eval(filtered_score_note).map { |frame| Frame.new(frame) }
+    end
 
-      filtered_game = @game_str.dup
-      filtered_game.gsub!(%r{-}, ':-')
-      filtered_game.gsub!(%r{/}, ':/')
-      filtered_game.gsub!('X', ':X')
+    def results
+      frames.map(&:total_score).join(',')
+    end
 
-      flames_ = eval(filtered_game)
+    private
 
-      @flames = flames_.map { |flame| Flame.new(flame) }
+    def filtered_score_note
+      @score_note.dup
+        .gsub('-', ':-')
+        .gsub('/', ':/')
+        .gsub('X', ':X')
     end
   end
 end
