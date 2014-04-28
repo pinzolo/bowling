@@ -6,15 +6,6 @@
 
 module Bowling
   class Game
-    def initialize(score_note)
-      unless /\A[\dX\/,\[\]-]+\z/.match(score_note)
-        raise ArgumentError, "score_note is invalid format."
-      end
-      @score_note = score_note
-      scorer = Scorer.new
-      frames.each { |frame| scorer.score(frame) }
-    end
-
     # == Parameters:
     #
     # game: "[[1,1],[2,3],...]"
@@ -29,6 +20,15 @@ module Bowling
     # /: スペア
     # -: ガター
     #
+    def initialize(score_note)
+      unless /\A[\dX\/,\[\]-]+\z/.match(score_note)
+        raise ArgumentError, "score_note is invalid format."
+      end
+      @score_note = score_note
+      scorer = Scorer.new
+      frames.each { |frame| scorer.score(frame) }
+    end
+
     def score
       frames.inject(0) { |total, frame| total += frame.score }
     end
@@ -44,7 +44,9 @@ module Bowling
     private
 
     def frames
-      @frames ||= eval(filtered_score_note).map { |frame| Frame.new(frame) }
+      @frames ||= raw_frame_scores.map do |frame|
+        raw_frame_scores.last != frame ?  Frame.new(frame) : LastFrame.new(frame)
+      end
     end
 
     def filtered_score_note
@@ -52,6 +54,10 @@ module Bowling
         .gsub('-', ':-')
         .gsub('/', ':/')
         .gsub('X', ':X')
+    end
+
+    def raw_frame_scores
+      @raw_frame_scores ||= eval(filtered_score_note)
     end
   end
 end

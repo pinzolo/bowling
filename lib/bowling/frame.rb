@@ -9,11 +9,11 @@ module Bowling
     end
 
     def spare?
-      @frame[1] == :/
+      score2 == :/
     end
 
     def strike?
-      @frame[0] == :X
+      score1 == :X
     end
 
     def score1

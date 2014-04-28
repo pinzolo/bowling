@@ -2,12 +2,16 @@
 module Bowling
   class Scorer
     def score(frame)
-      if frame.strike?
-        on_strike(frame)
-      elsif frame.spare?
-        on_spare(frame)
+      if frame.is_a?(LastFrame)
+        last_frame_to_frames(frame).each { |f| score(f) }
       else
-        on_normal_point(frame)
+        if frame.strike?
+          on_strike(frame)
+        elsif frame.spare?
+          on_spare(frame)
+        else
+          on_normal_point(frame)
+        end
       end
     end
 
@@ -91,6 +95,25 @@ module Bowling
       else
         @state = new_state
       end
+    end
+
+    def last_frame_to_frames(last_frame)
+      frames = []
+      if last_frame.score1 == :X
+        frames << Frame.new([:X])
+        if last_frame.score2 == :X
+          frames << Frame.new([:X])
+          frames << Frame.new([last_frame.score3,:-])
+        else
+          frames << Frame.new([last_frame.score2, last_frame.score3])
+        end
+      else
+        frames << Frame.new([last_frame.score1, last_frame.score2])
+        if last_frame.score2 == :/
+          frames << Frame.new([last_frame.score3,:-])
+        end
+      end
+      frames
     end
   end
 end
