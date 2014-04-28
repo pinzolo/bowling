@@ -160,5 +160,11 @@ describe Bowling::Game do
       its(:score) { should eq 0 }
       its(:results) { should eq "0,0,0,0,0,0,0,0,0,0" }
     end
+    context "when game is perfect" do
+      let(:score_note) { "[[X,X],[X,X],[X,X],[X,X],[X,X],[X,X],[X,X],[X,X],[X,X],[X,X,X]]" }
+      subject { Bowling::Game.new(score_note) }
+      its(:score) { should eq 300 }
+      its(:results) { should eq "30,60,90,120,150,180,210,240,270,300" }
+    end
   end
 end
