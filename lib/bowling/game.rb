@@ -21,7 +21,7 @@ module Bowling
     # -: ガター
     #
     def initialize(score_note)
-      unless /\A[\dX\/,\[\]-]+\z/.match(score_note)
+      unless /\A[ \dX\/,\[\]-]+\z/.match(score_note)
         raise ArgumentError, "score_note is invalid format."
       end
       @score_note = score_note

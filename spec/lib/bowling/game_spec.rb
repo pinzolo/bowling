@@ -179,7 +179,7 @@ describe Bowling::Game do
       its(:score) { should eq 146 }
     end
     context "pattern 3" do
-      let(:score_note) { "[[6,3],[9,-],[-,3],[8,/],[7,/],[X],[9,/],[8,-],[X],[X,6,/]]" }
+      let(:score_note) { "[[6, 3], [9, -], [-, 3], [8, /], [7, /], [X], [9, /], [8, -], [X], [X, 6, /]]" }
       subject { Bowling::Game.new(score_note) }
       its(:score) { should eq 150 }
     end
