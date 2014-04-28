@@ -24,8 +24,8 @@ module Bowling
       unless /\A[ \dX\/,\[\]-]+\z/.match(score_note)
         raise ArgumentError, "score_note is invalid format."
       end
+
       @score_note = score_note
-      scorer = Scorer.new
       frames.each { |frame| scorer.score(frame) }
     end
 
@@ -34,19 +34,20 @@ module Bowling
     end
 
     def results
-      scores = []
-      frames.each do |frame|
-        scores << scores.last.to_i + frame.score
-      end
-      scores.join(',')
+      total = 0
+      frames.map { |frame| total += frame.score }.join(',')
     end
-
-    private
 
     def frames
       @frames ||= raw_frame_scores.map do |frame|
         raw_frame_scores.last != frame ?  Frame.new(frame) : LastFrame.new(frame)
       end
+    end
+
+    private
+
+    def scorer
+      @scorer ||= Scorer.new
     end
 
     def filtered_score_note
