@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require_relative "../../lib/bowling"
+require_relative "../../../lib/bowling"
 
 describe Bowling::Game do
   describe "simple patterns" do

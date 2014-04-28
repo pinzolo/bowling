@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-require_relative "../../lib/bowling"
+require_relative "../../../lib/bowling"
 
 describe Bowling::Frame do
   context "with frames that has 2 scores" do
