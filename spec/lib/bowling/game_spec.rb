@@ -167,4 +167,21 @@ describe Bowling::Game do
       its(:results) { should eq "30,60,90,120,150,180,210,240,270,300" }
     end
   end
+  describe "complex patterns" do
+    context "pattern 1" do
+      let(:score_note) { "[[-,-],[X],[8,/],[X],[X],[X],[5,3],[8,/],[X],[X,X,X]]" }
+      subject { Bowling::Game.new(score_note) }
+      its(:score) { should eq 201 }
+    end
+    context "pattern 2" do
+      let(:score_note) { "[[7,/],[9,-],[8,1],[X],[5,/],[3,3],[X],[X],[5,3],[4,/,9]]" }
+      subject { Bowling::Game.new(score_note) }
+      its(:score) { should eq 146 }
+    end
+    context "pattern 3" do
+      let(:score_note) { "[[6,3],[9,-],[-,3],[8,/],[7,/],[X],[9,/],[8,-],[X],[X,6,/]]" }
+      subject { Bowling::Game.new(score_note) }
+      its(:score) { should eq 150 }
+    end
+  end
 end
