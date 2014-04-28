@@ -146,5 +146,11 @@ describe Bowling::Game do
       its(:score) { should eq 41 }
       its(:results) { should eq "2,4,6,8,10,12,14,16,18,41" }
     end
+    context "with last flame is punch out" do
+      let(:score_note) { "[[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[1,1],[X,X,X]]" }
+      subject { Bowling::Game.new(score_note) }
+      its(:score) { should eq 48 }
+      its(:results) { should eq "2,4,6,8,10,12,14,16,18,48" }
+    end
   end
 end

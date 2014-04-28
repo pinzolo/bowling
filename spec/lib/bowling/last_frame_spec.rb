@@ -245,7 +245,7 @@ describe Bowling::LastFrame do
       end
     end
 
-    context "when strike-strike-strike" do
+    context "when punch out" do
       subject { Bowling::LastFrame.new([:X,:X,:X]) }
 
       describe "#score1" do
