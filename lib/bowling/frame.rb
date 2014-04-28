@@ -28,7 +28,7 @@ module Bowling
       if score1 == :-
         0
       elsif score1 == :X
-        10
+        PIN_TOTAL
       else
         score1
       end
@@ -38,7 +38,7 @@ module Bowling
       if score2 == :-
         0
       elsif score2 == :/
-        10 - score1
+        PIN_TOTAL - score1
       else
         score2
       end

@@ -58,34 +58,34 @@ module Bowling
     end
 
     def spare(frame)
-      held_frames.shift.score = 10 + frame.pin_count1
+      held_frames.shift.score = SINGLE_BONUS + frame.pin_count1
     end
 
     def strike(frame)
-      held_frames.shift.score = 10 + frame.pin_count1 + frame.pin_count2
+      held_frames.shift.score = SINGLE_BONUS + frame.pin_count1 + frame.pin_count2
     end
 
     def strike_strike(frame)
-      held_frames.shift.score = 20 + frame.pin_count1
+      held_frames.shift.score = DOUBLE_BONUS + frame.pin_count1
       strike(frame)
     end
 
     def turkey
-      held_frames.shift.score = 30
+      held_frames.shift.score = TURKEY_BONUS
     end
 
     def spare_strike
-      held_frames.shift.score = 20
+      held_frames.shift.score = DOUBLE_BONUS
       @state = 'strike'
     end
 
     def strike_spare
-      held_frames.shift.score = 20
+      held_frames.shift.score = DOUBLE_BONUS
       @state = 'spare'
     end
 
     def strike_strike_spare(frame)
-      held_frames.shift.score = 20 + frame.pin_count1
+      held_frames.shift.score = DOUBLE_BONUS + frame.pin_count1
       strike_spare
     end
 

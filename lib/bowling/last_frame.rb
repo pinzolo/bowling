@@ -9,9 +9,9 @@ module Bowling
       if score2 == :-
         0
       elsif score2 == :/
-        10 - score1
+        PIN_TOTAL - score1
       elsif score2 == :X
-        10
+        PIN_TOTAL
       else
         score2
       end
@@ -21,9 +21,9 @@ module Bowling
       if score3 == :-
         0
       elsif score3 == :/
-        10 - score2
+        PIN_TOTAL - score2
       elsif score3 == :X
-        10
+        PIN_TOTAL
       else
         score3
       end
@@ -41,23 +41,23 @@ module Bowling
       if score1 == :X
         if score2 == :X
           if score3 == :X
-            30
+            TURKEY_BONUS
           else
-            20 + pin_count3
+            DOUBLE_BONUS + pin_count3
           end
         else
           if score3 == :/
-            20
+            DOUBLE_BONUS
           else
-            10 + pin_count2 + pin_count3
+            SINGLE_BONUS + pin_count2 + pin_count3
           end
         end
       else
         if score2 == :/
           if score3 == :X
-            20
+            DOUBLE_BONUS
           else
-            10 + pin_count3
+            SINGLE_BONUS + pin_count3
           end
         else
           pin_count1 + pin_count2
