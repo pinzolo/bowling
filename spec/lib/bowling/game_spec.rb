@@ -153,4 +153,12 @@ describe Bowling::Game do
       its(:results) { should eq "2,4,6,8,10,12,14,16,18,48" }
     end
   end
+  describe "special game" do
+    context "when game is all miss" do
+      let(:score_note) { "[[-,-],[-,-],[-,-],[-,-],[-,-],[-,-],[-,-],[-,-],[-,-],[-,-]]" }
+      subject { Bowling::Game.new(score_note) }
+      its(:score) { should eq 0 }
+      its(:results) { should eq "0,0,0,0,0,0,0,0,0,0" }
+    end
+  end
 end

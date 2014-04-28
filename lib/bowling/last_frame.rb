@@ -43,13 +43,13 @@ module Bowling
           if score3 == :X
             30
           else
-            20 + score3
+            20 + pin_count3
           end
         else
           if score3 == :/
             20
           else
-            10 + score2 + score3
+            10 + pin_count2 + pin_count3
           end
         end
       else
@@ -57,10 +57,10 @@ module Bowling
           if score3 == :X
             20
           else
-            10 + score3
+            10 + pin_count3
           end
         else
-          score1 + score2
+          pin_count1 + pin_count2
         end
       end
     end
